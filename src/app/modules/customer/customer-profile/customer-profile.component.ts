@@ -27,24 +27,11 @@ export class CustomerProfileComponent implements OnInit, OnDestroy {
    editmode = false;
  
 
-   customer: Customer =  {
-     user_id: 'USER-01',
-     user_type: 'customer',
-     first_name: 'Jayantha',
-     last_name: 'Karunarathna',
-     profile_pic: './assets/images/spprofilephoto.jpg',
-     email: 'saman78@gmail.com',
-     contact_no: '0719724335',
-     gender: 'male',
-     address_line1: 'Main Street',
-     address_line2: 'Dalugama, Kelaniya',
-     reg_date: new Date().toISOString(),
-     location: {latitude: 0, longtitude: 0 , town: 'Kelaniya'}
-   }
+   customer: Customer;
    
    // image to upload
    image: File;
-   imageUrl: any = './assets/images/merchant/nopic.png';
+   imageUrl: any = './assets/images/noimg.png';
  
 
   constructor(private authService: AuthService,
@@ -53,11 +40,11 @@ export class CustomerProfileComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
-    // this.authService.getServiceprovider();
-    // this.spSub = this.authService.getServiceprovidertUpdateListener().subscribe (
-    //  sprovider => {
-    //      this.serviceProvider = sprovider;
-    //  });
+    this.authService.getCustomer();
+    this.custSub = this.authService.getCustomerUpdateListener().subscribe (
+      (sprovider: Customer) => {
+          this.customer = sprovider;
+      });
   }
 
   ngOnDestroy() {
@@ -83,31 +70,26 @@ export class CustomerProfileComponent implements OnInit, OnDestroy {
     if (editForm.invalid) {
       console.log('Form Invalid');
     } else {
-      // const merchant: ServiceProvider = {
-      //   user_id: this.serviceProvider.user_id,
-      //   user_type: this.serviceProvider.user_type,
-      //   nic: editForm.value.nic,
-      //   first_name: editForm.value.first_name,
-      //   last_name: editForm.value.last_name,
-      //   profile_pic: this.serviceProvider.profile_pic,
-      //   email: editForm.value.email,
-      //   contact_no: editForm.value.contact_no,
-      //   address_line1: editForm.value.address_line1,
-      //   address_line2: editForm.value.address_line2,
-      //   postal_code: editForm.value.postal_code,
-      //   gender: editForm.value.gender,
-      //   date_of_birth: editForm.value.date_of_birth,
-      //   reg_date: this.serviceProvider.reg_date,
-      //   id_verification: this.serviceProvider.id_verification,
-      //   business: this.serviceProvider.business
-      //   };
-     // this.authService.updateServiceprovider(merchant, this.image);
+      const cust: Customer = {
+        user_id: this.customer.user_id,
+        user_type: this.customer.user_type,
+        first_name: editForm.value.first_name,
+        last_name: editForm.value.last_name,
+        profile_pic: this.customer.profile_pic,
+        email: editForm.value.email,
+        contact_no: editForm.value.contact_no,
+        address_line1: editForm.value.address_line1,
+        address_line2: editForm.value.address_line2,
+        gender: editForm.value.gender,
+        reg_date: this.customer.reg_date,
+        location: null
+        };
+      this.authService.updateCustomer(cust, this.image);
       this.custSub = this.authService.getCustomerUpdateListener()
       .subscribe((recievedCust: Customer) => {
         console.log(recievedCust);
         this.customer = recievedCust;
       });
-      console.log('Service Provider details updated successfully!');
       editForm.resetForm();
       this.editmode = false;
       setTimeout(() => {

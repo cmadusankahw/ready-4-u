@@ -7,7 +7,7 @@
       <!--profile pic-->
       <div class="pd-img">
         <img [src]="serviceProvider ? serviceProvider.profile_pic: './assets/images/spprofilephoto.jpg'" alt="Merchant Pic" class="img-thumbnail" >
-        <h5 class="txt-white pd-top-min text-center"> {{serviceProvider ? serviceProvider.first_name: 'Loading..'}} </h5>
+        <h3 class="txt-white pd-top-min text-center"> {{serviceProvider ? serviceProvider.first_name + ' ' + serviceProvider.last_name: 'Loading..'}} </h3>
       </div>
   
       <mat-nav-list style="padding-top:20px;">

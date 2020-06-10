@@ -3,6 +3,9 @@ import { ServiceProvider } from '../../auth/auth.model';
 import {Location} from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../../auth/auth.service';
+import { Subscription } from 'rxjs';
+import { Task } from '../../services/service.model';
 
 
 @Component({
@@ -12,64 +15,15 @@ import { NgForm } from '@angular/forms';
 })
 export class ServiceproviderListComponent implements OnInit {
 
-  serviceProviders: ServiceProvider[] = [
-   { user_id: 'USER-01',
-   user_type: 'serviceProvider',
-   first_name: 'Jayantha',
-   last_name: 'Karunarathna',
-   profile_pic: './assets/images/spprofilephoto.jpg',
-   nic: '123456789V',
-   email: 'saman78@gmail.com',
-   contact_no: '0719724335',
-   service_category: 'Electrician',
-   address_line1: 'Main Street',
-   address_line2: 'Dalugama, Kelaniya',
-   district:'Gampaha',
-   gender: 'male',
-   date_of_birth: '1995-05-07',
-   reg_date: new Date().toISOString(),
-   tasks : [{
-     id: '1',
-     task: 'Domestic Applience Repair',
-     rate: 500,
-     rate_type: 'per Hour',
-     rating:2.3
-   }],
-   isavailable: true,
-   location: {latitude: 0, longtitude: 0 , town: 'Kelaniya'},
-   firm: {
-     hasfirm: false, firm: '', firmOwner_id: ''
-   }}, {
-   user_id: 'USER-02',
-   user_type: 'serviceProvider',
-   first_name: 'Jayantha',
-   last_name: 'Karunarathna',
-   profile_pic: './assets/images/spprofilephoto.jpg',
-   nic: '123456789V',
-   email: 'saman78@gmail.com',
-   contact_no: '0719724335',
-   service_category: 'Electrician',
-   address_line1: 'Main Street',
-   address_line2: 'Dalugama, Kelaniya',
-   district:'Gampaha',
-   gender: 'male',
-   date_of_birth: '1995-05-07',
-   reg_date: new Date().toISOString(),
-   tasks : [{
-     id: '1',
-     task: 'Domestic Applience Repair',
-     rate: 500,
-     rate_type: 'per Hour',
-     rating:2.3
-   }],
-   isavailable: true,
-   location: {latitude: 0, longtitude: 0 , town: 'Kelaniya'},
-   firm: {
-    hasfirm: false, firm: '', firmOwner_id: ''
-  }},
-  ];
+  private spSub: Subscription;
 
-  taskId: number;
+  serviceProviders: ServiceProvider[] = [];
+
+  task: string;
+
+  sptask: Task;
+
+  category: string;
 
   hireNow = false;
 
@@ -84,13 +38,35 @@ export class ServiceproviderListComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
                private router: Router,
-               private location: Location) {
+               private location: Location,
+               private authService: AuthService) {
     let id: string = route.snapshot.params.category_id;
-    this.taskId = Number(id.split('_')[1]) - 1;
+    this.category = id.split('_')[0];
+    this.task = id.split('_')[1];
   }
 
   ngOnInit( ) {
-    console.log(this.taskId);
+    console.log(this.task);
+    console.log(this.category);
+    setTimeout(()=> {
+      this.authService.getServiceproviders(this.category);
+      this.spSub = this.authService.getServiceproviderstUpdateListener()
+          .subscribe((recievedServices: ServiceProvider[]) => {
+            if (recievedServices) {
+              console.log(recievedServices);
+              for (let sp of recievedServices) {
+                for (const cat of sp.tasks) {
+                  if (cat.id === this.task) {
+                    this.sptask = cat;
+                    this.serviceProviders.push(sp);
+                  }
+                }
+              }
+              console.log(this.serviceProviders);
+            }
+  
+      });
+    },500);  
   }
 
   serviceProviderSelected(userId: string) {
@@ -103,7 +79,7 @@ export class ServiceproviderListComponent implements OnInit {
 
   placeOrder(orderForm: NgForm) {
     if (orderForm.invalid) {
-      console.log('fom invalid');
+      console.log('form invalid');
       return;
     }
     this.router.navigate(['/cust/map']);

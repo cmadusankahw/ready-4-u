@@ -13,7 +13,9 @@ import { Customer } from 'src/app/modules/auth/auth.model';
   templateUrl: './customer-dashboard.component.html',
   styleUrls: ['./customer-dashboard.component.scss']
 })
-export class CustomerDashboardComponent implements OnInit {
+export class CustomerDashboardComponent implements OnInit, OnDestroy {
+
+   private hSub: Subscription;
 
     // navigation
     home = 'txt-white row';
@@ -21,6 +23,7 @@ export class CustomerDashboardComponent implements OnInit {
     profile = 'txt-white row';
 
     customer: Customer;
+
 
     // pass edit ability
     editmode = true;
@@ -31,11 +34,24 @@ export class CustomerDashboardComponent implements OnInit {
       shareReplay()
     );
 
+
+
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.doRoute();
+    this.authService.getCustomer();
+    this.hSub = this.authService.getCustomerUpdateListener().subscribe (
+      res => {
+          this.customer = res;
+      });
+  }
+
+  ngOnDestroy() {
+    if(this.hSub){
+      this.hSub.unsubscribe();
+    }
   }
 
   doRoute() {

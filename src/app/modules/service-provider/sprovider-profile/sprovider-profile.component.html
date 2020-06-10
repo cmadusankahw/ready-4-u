@@ -232,7 +232,7 @@
                   <mat-label>First Name </mat-label>
                   <input matInput [ngModel]="serviceProvider.first_name" required
                   name="first_name" #firstName="ngModel">
-                  <mat-error *ngIf="firstName.invalid">Please enter a vaalur</mat-error>
+                  <mat-error *ngIf="firstName.invalid">Please enter name</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-md-6">
@@ -240,7 +240,7 @@
                   <mat-label>Last Name </mat-label>
                   <input matInput   [ngModel]="serviceProvider.last_name" required
                   #lastName="ngModel" name="last_name">
-                  <mat-error *ngIf="lastName.invalid">Please enter a value</mat-error>
+                  <mat-error *ngIf="lastName.invalid">Please enter name</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -315,7 +315,6 @@
                        ngModel name="gender">
                       <mat-option value="male">Male</mat-option>
                       <mat-option value="female">Female</mat-option>
-                      <mat-option value="none">Prefer Not to Say</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -365,7 +364,7 @@
                     <mat-label> *District </mat-label>
                     <mat-select [ngModel]="serviceProvider.district" required
                     name="district"  ngModel>
-                        <option *ngFor="let district of districts"> {{district}} </option>
+                        <option *ngFor="let district of districts" [value] ="district"> {{district}} </option>
                     </mat-select>         
                   </mat-form-field>
                   <div class ="loc-btn pd-top-min">
@@ -386,7 +385,7 @@
                     <mat-label>Select Service Category </mat-label>
                     <mat-select [ngModel]="serviceProvider.service_category" required
                     name="service_category"  ngModel>
-                        <option *ngFor="let cat of serviceCategories"> {{cat}} </option>
+                        <option *ngFor="let cat of serviceCategories" [value] ="cat.id"> {{cat.category}} </option>
                     </mat-select>         
                   </mat-form-field>
                   </div>
@@ -403,7 +402,7 @@
                                  <div class="col-md-5">
                                     <mat-form-field class="service-full-width">
                                         <mat-label>Task Name </mat-label>
-                                        <input matInput [ngModel]="task.task" required type="number"
+                                        <input matInput [ngModel]="task.task" required 
                                         name="task_name" #taskName="ngModel" ngModel>
                                         <mat-error *ngIf="taskName.invalid">Enter Value</mat-error>
                                       </mat-form-field>
@@ -413,7 +412,7 @@
                                         <mat-label>Fee Type </mat-label>
                                         <mat-select [ngModel]="task.rate_type" required
                                             name="task_rate_type"  ngModel>
-                                                <option *ngFor="let rate of rateTypes"> {{rate}} </option>
+                                                <option *ngFor="let rate of rateTypes" [value]="rate"> {{rate}} </option>
                                             </mat-select>  
                                       </mat-form-field>
                                  </div>
@@ -426,12 +425,46 @@
                                       </mat-form-field>
                                  </div>
                                  <div class="col-md-1">
-                                     <button class="btn btn-md" color="green" mdbBtn style="border-radius:50%;"
-                                     (click)= "newTask(task.id)">
-                                    +</button>
+                                    
                                  </div>
                              </div>
                          </div>
+
+                         <!-- new task adding-->
+                         <div class="sel-task" *ngFor="let task of newTasks" >
+                          <div class="row">
+                              <div class="col-md-5">
+                                 <mat-form-field class="service-full-width">
+                                     <mat-label>Task Name </mat-label>
+                                     <input matInput [ngModel]="task.task" required 
+                                     name="task_name" #taskName="ngModel" ngModel>
+                                     <mat-error *ngIf="taskName.invalid">Enter Value</mat-error>
+                                   </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                 <mat-form-field class="service-full-width">
+                                     <mat-label>Fee Type </mat-label>
+                                     <mat-select [ngModel]="task.rate_type" required
+                                         name="task_rate_type"  ngModel>
+                                             <option *ngFor="let rate of rateTypes"> {{rate}} </option>
+                                         </mat-select>  
+                                   </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                 <mat-form-field class="service-full-width">
+                                     <mat-label>Fee (Rs.) </mat-label>
+                                     <input matInput [ngModel]="task.rate" required type="number"
+                                     name="task_rate" #taskRate="ngModel" ngModel>
+                                     <mat-error *ngIf="taskRate.invalid">Enter Value</mat-error>
+                                   </mat-form-field>
+                              </div>
+                              <div class="col-md-1">
+                                  <button class="btn btn-md" color="green" mdbBtn style="border-radius:50%;"
+                                  (click)= "newTask(task)" >
+                                 +</button>
+                              </div>
+                          </div>
+                      </div>
                       
                          </div>
                        </div>

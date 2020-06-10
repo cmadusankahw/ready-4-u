@@ -20,11 +20,11 @@
         <div class="row f-image">
         </div>
         <div class="row logo-cls">
-          <div class="col-md-2">
+          <div class="col-md-3">
               <img src="{{customer ? customer.profile_pic : imageUrl}}"
-              alt="User Pic" class="img-thumbnail logo-img">
+              alt="User Pic" class="img-thumbnail logo-img" style="width:100%;">
           </div>
-          <div class="col-md-10">
+          <div class="col-md-9">
             <h2 class="txt-title"> {{customer ? customer.first_name : 'Loading...'}}  {{customer ? customer.last_name : ' Loading...'}} </h2>
           </div>
         </div>
@@ -66,7 +66,7 @@
                     </div>
   
                     <div class="col-md-7 profile-text">
-                        <span> {{customer ? customer.gender : 'Loading...'}}</span>
+                        <span> {{customer.gender ? customer.gender : 'Loading...'}}</span>
                     </div>
                   </div>
   
@@ -85,7 +85,7 @@
                         </div>
                       </div>
                       <br>
-                <div class="content-title" >
+                <div class="content-title div-content" >
                   Account Details
                 </div>
                   <hr>
@@ -169,7 +169,7 @@
                   <mat-label>First Name </mat-label>
                   <input matInput [ngModel]="customer.first_name" required
                   name="first_name" #firstName="ngModel">
-                  <mat-error *ngIf="firstName.invalid">Please enter a vaalur</mat-error>
+                  <mat-error *ngIf="firstName.invalid">Please enter name</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-md-6">
@@ -177,7 +177,7 @@
                   <mat-label>Last Name </mat-label>
                   <input matInput   [ngModel]="customer.last_name" required
                   #lastName="ngModel" name="last_name">
-                  <mat-error *ngIf="lastName.invalid">Please enter a value</mat-error>
+                  <mat-error *ngIf="lastName.invalid">Please enter name</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -199,7 +199,7 @@
                 <mat-label>Email Address here </mat-label>
                 <input matInput [ngModel]="customer.email" required type="email"
                 #email="ngModel" name="email" ngModel >
-                <mat-error *ngIf="email.invalid">Please enter a valid email address</mat-error>
+                <mat-error *ngIf="email.invalid">Please enter a valid email </mat-error>
               </mat-form-field>
             </div>
            </div>
@@ -208,7 +208,7 @@
               <div class="row page-content">
   
                 <div class="col-md-3 inst-text">
-                  <mdb-icon fas icon="phone"></mdb-icon> <span> Contact No</span>
+                  <mdb-icon fas icon="phone"></mdb-icon> <span> Phone No</span>
                 </div>
   
                 <div class="col-md-7 text-center">
@@ -216,7 +216,7 @@
                     <mat-label> Contact No here </mat-label>
                     <input matInput [ngModel]="customer.contact_no" required
                     #contactNo="ngModel" minlength="10" maxlength="10" name="contact_no">
-                    <mat-error *ngIf="contactNo.invalid">Contact No should contain 10 digits</mat-error>
+                    <mat-error *ngIf="contactNo.invalid">Phone No should contain 10 digits</mat-error>
                   </mat-form-field>
                 </div>
                </div>
@@ -236,7 +236,6 @@
                        ngModel name="gender">
                       <mat-option value="male">Male</mat-option>
                       <mat-option value="female">Female</mat-option>
-                      <mat-option value="none">Prefer Not to Say</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -247,7 +246,7 @@
               <div class="row  page-content">
   
                 <div class="col-md-3 inst-text">
-                  <mdb-icon fas icon="home"></mdb-icon> <span> Your Address</span>
+                  <mdb-icon fas icon="home"></mdb-icon> <span> Address</span>
                 </div>
   
                 <div class="col-md-7 text-center">
@@ -318,7 +317,7 @@
             <span aria-hidden="true">×</span>
           </button>
           <h4 class="modal-title w-100" id="myModalLabel" >
-            Change You Password
+            Change Password
           </h4>
         </div>
         <div class="modal-body text-center" style="height: 320px; overflow-y: auto;" >

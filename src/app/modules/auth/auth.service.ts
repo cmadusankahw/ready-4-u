@@ -16,15 +16,17 @@ import {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private serviceproviderUpdated = new Subject<ServiceProvider>();
+  private serviceprovidersUpdated = new Subject<ServiceProvider[]>();
   private customerUpdated = new Subject<Customer>();
   private userUpdated = new Subject<User[]>();
   private lastIdUpdated = new Subject<string>();
 
-  // to get serviceprovider/customer once logged in
   private serviceprovider: ServiceProvider;
   private customer: Customer;
 
   private users: User[] = [];
+
+  private serviceproviders: ServiceProvider[];
 
   // for service provider data passing
   private serviceproviderTemp: ServiceProviderTemp;
@@ -82,16 +84,27 @@ export class AuthService {
   getServiceprovider() {
     this.http
       .get<{ message: string; serviceprovider: ServiceProvider }>(
-        this.url + 'auth/get/serviceprovider'
+        this.url + 'auth/get/sprovider'
       )
       .subscribe(
         (recievedServiceprovider) => {
           this.serviceprovider = recievedServiceprovider.serviceprovider;
           this.serviceproviderUpdated.next(this.serviceprovider);
-        },
-        (error) => {
-          this.router.navigate(['/']);
-          console.log(error);
+        }
+      );
+  }
+
+
+  // get list of sp
+  getServiceproviders(category: string) {
+    this.http
+      .post<{ message: string; serviceproviders: ServiceProvider[] }>(
+        this.url + 'auth/get/sproviders', {category}
+      )
+      .subscribe(
+        (recievedServiceprovider) => {
+          this.serviceproviders = recievedServiceprovider.serviceproviders;
+          this.serviceprovidersUpdated.next([...this.serviceproviders]);
         }
       );
   }
@@ -116,9 +129,10 @@ export class AuthService {
 
   // get details for header
   getHeaderDetails() {
+    this.autoAuthUser();
     if (this.token) {
       this.http
-        .get<{ user_type: string; email: string}>(
+        .get<{ user_type: string; email: string, prodile_pic: string}>(
           this.url + 'auth/get/head'
         )
         .subscribe((recievedHeader) => {
@@ -166,6 +180,10 @@ export class AuthService {
 
   getServiceprovidertUpdateListener() {
     return this.serviceproviderUpdated.asObservable();
+  }
+
+  getServiceproviderstUpdateListener() {
+    return this.serviceprovidersUpdated.asObservable();
   }
 
   getCustomerUpdateListener() {
@@ -289,7 +307,7 @@ export class AuthService {
 
       this.http
         .post<{ profile_pic: string }>(
-          this.url + 'auth/serviceprovider/img',
+          this.url + 'auth/profile/img',
           newServiceprovider
         )
         .subscribe((recievedImage) => {
@@ -297,7 +315,7 @@ export class AuthService {
           serviceprovider.profile_pic = recievedImage.profile_pic;
           this.http
             .post<{ message: string }>(
-              this.url + 'auth/serviceprovider',
+              this.url + 'auth/sprovider/edit',
               serviceprovider
             )
             .subscribe(
@@ -307,7 +325,7 @@ export class AuthService {
                 this.serviceproviderUpdated.next(this.serviceprovider);
                 this.dialog.open(SuccessComponent, {
                   data: {
-                    message: 'Your Profile Details Updated Successfully!',
+                    message: 'Profile Details Updated Successfully!',
                   },
                 });
               },
@@ -319,7 +337,7 @@ export class AuthService {
     } else {
       this.http
         .post<{ message: string }>(
-          this.url + 'auth/serviceprovider',
+          this.url + 'auth/sprovider',
           serviceprovider
         )
         .subscribe(
@@ -328,7 +346,7 @@ export class AuthService {
             this.serviceprovider = serviceprovider;
             this.serviceproviderUpdated.next(this.serviceprovider);
             this.dialog.open(SuccessComponent, {
-              data: { message: 'Your Profile Details Updated Successfully!' },
+              data: { message: 'Profile Details Updated Successfully!' },
             });
           },
           (error) => {
@@ -346,15 +364,15 @@ export class AuthService {
       console.log(newCustomer);
 
       this.http
-        .post<{ profile_pic: string }>(
-          this.url + 'auth/customer/img',
+        .post<{ profilePic: string }>(
+          this.url + 'auth/profile/img',
           newCustomer
         )
         .subscribe((recievedImage) => {
           console.log(recievedImage);
-          customer.profile_pic = recievedImage.profile_pic;
+          customer.profile_pic = recievedImage.profilePic;
           this.http
-            .post<{ message: string }>(this.url + 'auth/customer', customer)
+            .post<{ message: string }>(this.url + 'auth/customer/edit', customer)
             .subscribe(
               (recievedData) => {
                 console.log(recievedData.message);
@@ -362,7 +380,7 @@ export class AuthService {
                 this.customerUpdated.next(this.customer);
                 this.dialog.open(SuccessComponent, {
                   data: {
-                    message: 'Your Profile Details Updated Successfully!',
+                    message: 'Profile Details Updated Successfully!',
                   },
                 });
               },
@@ -373,14 +391,14 @@ export class AuthService {
         });
     } else {
       this.http
-        .post<{ message: string }>(this.url + 'auth/customer', customer)
+        .post<{ message: string }>(this.url + 'auth/customer/edit', customer)
         .subscribe(
           (recievedData) => {
             console.log(recievedData.message);
             this.customer = customer;
             this.customerUpdated.next(this.customer);
             this.dialog.open(SuccessComponent, {
-              data: { message: 'Your Profile Details Updated Successfully!' },
+              data: { message: 'Profile Details Updated Successfully!' },
             });
           },
           (error) => {

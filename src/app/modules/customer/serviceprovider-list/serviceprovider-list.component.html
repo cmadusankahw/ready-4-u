@@ -15,7 +15,7 @@
             <br> 
             <span class="search-result-sub"> {{sp.service_category}}</span>
             <br>
-            <span class="search-result-price"> Rs. {{sp.tasks[taskId].rate}} {{sp.tasks[taskId].rate_type}} </span>
+            <span class="search-result-price"> Rs. {{sptask.rate}} {{sptask.rate_type}} </span>
           </div>
         <div class="col-md-1">
         </div>
@@ -26,7 +26,7 @@
             <mdb-icon fas icon="book"></mdb-icon> Hire Now</a>
           </div>
            <div class="rating-mini">
-            <ngb-rating readonly="true" [rate]="sp.tasks[taskId].rating" max="5">
+            <ngb-rating readonly="true" [rate]="sptask.rating" max="5">
               <ng-template  let-fill="fill" let-index="index">
                 <span class="star-mini" [class.filled]="fill === 100">&#9733;</span>
               </ng-template>
@@ -63,7 +63,7 @@
 
       <form class="service-form" #taskDetailForm=ngForm (submit) = "placeOrder(taskDetailForm)">
       <div class="details-input container pd-top-min">
-        <h4><b> State information regarding your required service task: {{selectedServiceProvider.tasks[taskId].task}} below.. </b></h4>
+        <h4><b> State information regarding your required service task below.. </b></h4>
         <span>  A rich explanation may help to get the best service as required..</span><br><br>
         <mat-form-field class="full-width">
         <textarea matInput rows="5" name="task_description" ngModel placeholder="I want this service like..."></textarea>

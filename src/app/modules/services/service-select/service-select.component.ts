@@ -48,7 +48,7 @@ export class ServiceSelectComponent implements OnInit {
     }
   }
 
-  viewAvailableServiceProviders(category: string, taskId: string) {
-    this.router.navigate(['cust/asp/' + category + '_' + taskId]);
+  viewAvailableServiceProviders(category: string, task: string) {
+    this.router.navigate(['cust/asp/' + category + '_' + task]);
   }
 }

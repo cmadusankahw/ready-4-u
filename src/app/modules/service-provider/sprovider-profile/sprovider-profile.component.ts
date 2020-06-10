@@ -9,7 +9,8 @@ import { DatePipe } from '@angular/common';
 
 import { ErrorComponent } from 'src/app/error/error.component';
 import { ServiceProvider } from '../../auth/auth.model';
-import { Task } from '../../services/service.model';
+import { Task, ServiceCategory } from '../../services/service.model';
+import { ServiceService } from '../../services/service.service';
 
 
 @Component({
@@ -21,74 +22,59 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
 
   // subscription
   private spSub: Subscription;
+  private catSub: Subscription;
 
   @Input() isowner;
 
   // edit profile mode
   editmode = false;
 
-  serviceProvider: ServiceProvider =  {
-    user_id: 'USER-01',
-    user_type: 'serviceProvider',
-    first_name: 'Jayantha',
-    last_name: 'Karunarathna',
-    profile_pic: './assets/images/spprofilephoto.jpg',
-    nic: '123456789V',
-    email: 'saman78@gmail.com',
-    contact_no: '0719724335',
-    service_category: 'Electrician',
-    address_line1: 'Main Street',
-    address_line2: 'Dalugama, Kelaniya',
-    district:'Gampaha',
-    gender: 'male',
-    date_of_birth: '1995-05-07',
-    reg_date: new Date().toISOString(),
-    tasks : [{
-      id: '1',
-      task: 'Domestic Applience Repair',
-      rate: 500,
-      rate_type: 'per Hour',
-      rating:2.3
-    }],
-    isavailable: true,
-    location: {latitude: 0, longtitude: 0 , town: 'Kelaniya'},
-    firm: {
-      hasfirm: false,
-      firmOwner_id: '',
-      firm: ''
-    }
-  }
-  
+  serviceProvider: ServiceProvider;
+
   // image to upload
   image: File;
-  imageUrl: any = './assets/images/merchant/nopic.png';
+  imageUrl: any = './assets/images/noimg.png';
 
 
   // Districts
   districts = ['Colombo', 'Kaluthara', 'Galle', 'Matara', 'Matale', 'Kandy', 'Gampaha' , 'Hambanthota', 'Negamobo', 'Chiillaw', 'Badulla' , 'Nuwara Eliya'];
 
   // service categories
-  serviceCategories = ['Electrician', 'Plumbr'];
+  serviceCategories : ServiceCategory[];
 
   // rate types
   rateTypes = ['per Hour', 'per Day'];
 
+  newTasks: Task[]= [
+    {id:'', task: '', rate: 0, rate_type: 'per Day', rating: 0}
+  ];
+
   constructor(private authService: AuthService,
               public dialog: MatDialog,
               public datepipe: DatePipe,
-              private router: Router) { }
+              private router: Router,
+              private serviceService: ServiceService) { }
 
    ngOnInit() {
-    // this.authService.getServiceprovider();
-    // this.spSub = this.authService.getServiceprovidertUpdateListener().subscribe (
-    //  sprovider => {
-    //      this.serviceProvider = sprovider;
-    //  });
+    this.serviceService.getServiceCategories();
+    this.catSub = this.serviceService.getServiceCategoriesUpdateListener().subscribe (
+     cat => {
+         this.serviceCategories = cat;
+         console.log(this.serviceCategories);
+     });
+    this.authService.getServiceprovider();
+    this.spSub = this.authService.getServiceprovidertUpdateListener().subscribe (
+      sprovider => {
+          this.serviceProvider = sprovider;
+      });
   }
 
   ngOnDestroy() {
     if (this.spSub) {
       this.spSub.unsubscribe();
+    }
+    if (this.catSub) {
+      this.catSub.unsubscribe();
     }
     this.imageUrl = './assets/images/noimg.png';
     this.image = null;
@@ -109,31 +95,34 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
     if (editForm.invalid) {
       console.log('Form Invalid');
     } else {
-      // const merchant: ServiceProvider = {
-      //   user_id: this.serviceProvider.user_id,
-      //   user_type: this.serviceProvider.user_type,
-      //   nic: editForm.value.nic,
-      //   first_name: editForm.value.first_name,
-      //   last_name: editForm.value.last_name,
-      //   profile_pic: this.serviceProvider.profile_pic,
-      //   email: editForm.value.email,
-      //   contact_no: editForm.value.contact_no,
-      //   address_line1: editForm.value.address_line1,
-      //   address_line2: editForm.value.address_line2,
-      //   postal_code: editForm.value.postal_code,
-      //   gender: editForm.value.gender,
-      //   date_of_birth: editForm.value.date_of_birth,
-      //   reg_date: this.serviceProvider.reg_date,
-      //   id_verification: this.serviceProvider.id_verification,
-      //   business: this.serviceProvider.business
-      //   };
-     // this.authService.updateServiceprovider(merchant, this.image);
+      const sp: ServiceProvider = {
+        user_id: this.serviceProvider.user_id,
+        user_type: this.serviceProvider.user_type,
+        nic: editForm.value.nic,
+        first_name: editForm.value.first_name,
+        last_name: editForm.value.last_name,
+        profile_pic: this.serviceProvider.profile_pic,
+        email: editForm.value.email,
+        contact_no: editForm.value.contact_no,
+        service_category: editForm.value.service_category,
+        address_line1: editForm.value.address_line1,
+        address_line2: editForm.value.address_line2,
+        district: editForm.value.district,
+        gender: editForm.value.gender,
+        date_of_birth: editForm.value.date_of_birth,
+        reg_date: this.serviceProvider.reg_date,
+        isavailable: this.serviceProvider.isavailable,
+        location: this.serviceProvider.location,
+        firm: this.serviceProvider.firm,
+        tasks: this.serviceProvider.tasks
+        };
+      this.authService.updateServiceprovider(sp, this.image);
       this.spSub = this.authService.getServiceprovidertUpdateListener()
       .subscribe((recievedSp: ServiceProvider) => {
         console.log(recievedSp);
         this.serviceProvider = recievedSp;
       });
-      console.log('Service Provider details updated successfully!');
+      console.log('Service Provider details updated!');
       editForm.resetForm();
       this.editmode = false;
       setTimeout(() => {
@@ -160,16 +149,12 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
     }
 
     // add new task input
-    newTask(taskId: string) {
-      const tId = (Number(taskId) + 1).toString();
-      const task: Task = {
-        id: tId,
-        task: '',
-        rate: 0,
-        rate_type: 'per Hour',
-        rating: 0
-      };
+    newTask(task: Task) {
+      task.id = task.task.trim();
       this.serviceProvider.tasks.push(task);
+      this.newTasks.push({
+        id: '', task: '', rate: 0, rate_type: '',rating: 0
+      });
     }
 
 }

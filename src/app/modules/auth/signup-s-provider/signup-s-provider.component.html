@@ -69,7 +69,7 @@
         <mat-form-field class="mfield">
           <mat-label>Service Category</mat-label>
           <mat-select required #ServiceCat = "ngModel" ngModel name="category">
-            <mat-option [value] ="cat.category" *ngFor="let cat of categories">{{cat.category}}</mat-option>
+            <mat-option [value] ="cat.id" *ngFor="let cat of categories">{{cat.category}}</mat-option>
           </mat-select>
           <mat-error *ngIf="userType.invalid"> Please select your service category</mat-error>
         </mat-form-field>

@@ -31,7 +31,7 @@
   
   <div class="row container-fluid service-holder">
     <div class="card task-card shadow text-center" *ngFor="let task of selectedCategory.tasks"
-     (click) = "viewAvailableServiceProviders(selectedCategory.category, task.id)">
+     (click) = "viewAvailableServiceProviders(selectedCategory.id, task.id)">
       <!-- Card content -->
       <a mdbWavesEffect>
         <div class="card-body">

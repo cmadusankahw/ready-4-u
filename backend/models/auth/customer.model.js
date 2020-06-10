@@ -10,8 +10,9 @@ const customerSchema = mongoose.Schema(
     profile_pic: { type: String },
     email: { type: String, required: true, unique: true },
     contact_no: { type: String, required: true },
-    address_line1: { type: String },
+    address_line1: { type: String, required: true },
     address_line2: { type: String },
+    gender: {type: String, required: true},
     reg_date: { type: String, required: true },
   },
   { collection: 'Customer' }

@@ -15,6 +15,8 @@ import { ServiceProvider } from 'src/app/modules/auth/auth.model';
 })
 export class ServiceproviderDashboardComponent implements OnInit {
 
+  private hSub: Subscription;
+
   // navigation
   home = 'txt-white row';
   orders = 'txt-white row';
@@ -37,6 +39,11 @@ export class ServiceproviderDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.doRoute();
+    this.authService.getServiceprovider();
+    this.hSub = this.authService.getServiceprovidertUpdateListener().subscribe (
+      res => {
+          this.serviceProvider = res;
+      });
   }
 
   doRoute() {

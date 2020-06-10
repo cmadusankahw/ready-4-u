@@ -3,7 +3,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const s_categoriesSchema = mongoose.Schema(
   {
-    id: { type: String, required: true},
+    id: { type: String, required: true, unique: true},
     category: { type: String, required: true },
     icon: { type: String, required: true},
     tasks:{ type: [{
