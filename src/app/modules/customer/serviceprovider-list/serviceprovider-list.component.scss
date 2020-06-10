@@ -1,0 +1,251 @@
+.service-card {
+    margin: 10px;
+    max-width: 170px;
+    min-width: 160px;
+  }
+  
+  .service-text {
+    padding: 20px;
+    font-weight: bold;
+    font-size: 50px;
+    color: darkgreen;
+  }
+  
+  .service-holder {
+    padding: 20px;
+    margin:12px;
+  }
+  
+  .service-select-heading {
+    padding-top: 30px;
+    color: darkgreen;
+    font-weight: bold;
+  }
+  
+  .task-card {
+    margin: 10px;
+    max-width: 350px;
+    min-width: 340px;
+  }
+  
+  .task-text {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 50px;
+    color: darkgreen;
+  }
+  
+  .task-title {
+    color: darkgreen;
+    font-weight:bold;
+    font-size:18px;
+    line-height:24px;
+  }
+
+
+.search-icon mat-icon{
+    color:darkmagenta;
+    font-weight:bold;
+  }
+  
+  .search-box{
+    background-color: white;
+    border-radius: 15px;
+    padding:10px;
+    padding-bottom:0;
+    padding-top:5px;
+    width:30%;
+    margin:0 auto;
+    text-align:center;
+  }
+  
+  .search-input{
+    width:100%;
+    margin:0 auto;
+    font-size:18px;
+    color:darkgrey;
+    text-align:center;
+  }
+
+
+.product-cat{
+    padding:15px;
+    background-color: rgb(248, 248, 248);
+    border-radius: 10px;
+    margin-bottom:42px;
+  }
+  
+  .pd-top{
+    padding-top:40px;
+  }
+  
+  .pd-top-min{
+    padding-top:30px;
+  }
+  
+  .pd-side{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  
+//star ratings
+.star {
+    font-size:33px;
+    color: #f9ffa7;
+  }
+  
+  .star-mini {
+    font-size:23px;
+    color: #f9ffa7;
+  }
+  
+  .filled {
+    color: #eeb90d;
+  
+  }
+  .bad {
+    color: #deb0b0;
+  }
+  .filled.bad {
+    color: #ffa91e;
+  }
+  
+  .rating{
+    text-align:center;
+  }
+  
+  .rating-mini{
+    text-align:right;
+    padding-top:15px;
+  }
+  
+  
+  
+  //search-result
+  
+  .search-result{
+    padding:15px;
+    background-color: #f6f6f6;
+    border-radius:10px;
+    margin-bottom:20px;
+  }
+  
+  .search-result-price{
+    line-height:25px;
+    font-weight:600;
+    color:darkslategray;
+    font-size:17px;
+    padding-left:5px;
+  }
+
+    
+  .search-result-sub{
+    line-height:28px;
+    font-weight:800;
+    color:darkcyan;
+    font-size:20px;
+    padding-left:5px;
+  }
+  
+  
+  .search-result-heading{
+    font-weight:bold;
+    color:darkgreen;
+    font-size:26px;
+    padding-top:6px;
+    padding-left:5px;
+  }
+  
+  .search-result-pd{
+    padding-top:18px;
+  }
+  
+  .search-result-btn-pd{
+    padding-top:23px;
+  }
+
+  .top-img{
+    width:140px; 
+    border:5px solid; 
+    border-color:white; 
+    border-radius:50%;
+  }
+
+  .top-name{
+      font-weight:bold;
+      font-size:24px;
+      color:darkcyan;
+      vertical-align: center;
+      line-height:50px;
+      margin-top:30px;
+  }
+
+
+  .top-type{
+    font-weight:bold;
+    font-size:18px;
+    color:darkgray;
+  }
+
+
+.top-text{
+    font-weight:bold;
+    font-size:16px;
+    color:darkgray;
+  }
+
+.full-width{
+    width:90%;
+
+}
+
+.details-input{
+    color:darkgray
+}
+
+.img-cls{
+    width:100%;
+    max-width:200px;
+    margin:0 auto;
+  }
+
+  
+//mobile view
+@media screen and (max-width: 600px) {
+    .search-box{
+      width:75%;
+      padding-top:5px;
+      padding-right:5px;
+      padding-left:5px;
+    }
+    .search-result-heading{
+      text-align: center;
+    }
+    .search-result-price{
+      text-align: center;
+    }
+    .search-result-sub{
+        text-align: center;
+      }
+    .search-results{
+      width:100%;
+      margin:0 auto;
+    }
+    .rating-mini{
+      text-align:center;
+    }
+    .search-result-btn-pd{
+      text-align:center;
+    }
+    .top-name{
+        margin-top:12px;
+    }
+    .top-c{
+        text-align: center;
+    }
+    .details-input{
+        text-align: center;;
+    }
+  }
+  

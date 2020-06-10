@@ -1,0 +1,131 @@
+<!-- common navbar-->
+<!--Navbar-->
+<mdb-navbar
+  SideClass="navbar navbar-expand-lg sticky-top navbar-dark green scrolling-navbar"
+  [containerInside]="false"
+  *ngIf="!userIsAuthenticated"
+>
+  <!-- Navbar brand -->
+  <mdb-navbar-brand
+    ><a class="navbar-brand" routerLink="/">
+      <img src="./assets/images/thumb.png" height="60" alt="" /> </a
+  ></mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+    <ul class="navbar-nav ml-auto txt-800">
+      <li class="nav-item">
+        <a mdbWavesEffect class="nav-link" routerLink="/services">
+          Find Services
+        </a>
+      </li>
+      <li class="nav-item">
+        <a mdbWavesEffect class="nav-link" routerLink="/contactus">
+          Contact Us
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="!onLogin">
+        <a
+          mdbWavesEffect
+          class="nav-link txt-bold"
+          routerLink="/login"
+          routerLinkActive="green darken-3"
+        >
+          Log In
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="!onRegister">
+        <a
+          mdbWavesEffect
+          class="nav-link txt-bold"
+          routerLink="/register"
+          routerLinkActive="green darken-3"
+        >
+          Sign Up
+        </a>
+      </li>
+    </ul>
+  </links>
+  <!-- Collapsible content -->
+</mdb-navbar>
+<!--/.Navbar-->
+
+<!--service provider navbar-->
+<!--Navbar-->
+<mdb-navbar
+  SideClass="navbar navbar-expand-lg sticky-top navbar-dark green scrolling-navbar"
+  [containerInside]="false"
+  *ngIf="userIsAuthenticated && headerDetails.user_type === 'serviceprovider'"
+>
+  <!-- Navbar brand -->
+  <mdb-navbar-brand
+    ><a class="navbar-brand" routerLink="/">
+      <img src="./assets/images/thumb.png" height="60" alt="" /> </a
+  ></mdb-navbar-brand>
+  <links>
+    <ul class="navbar-nav ml-auto txt-800">
+      <li class="nav-item">
+        <a mdbWavesEffect class="nav-link" routerLink="/terms">
+          Policy & Terms
+        </a>
+      </li>
+      <li class="nav-item">
+        <a mdbWavesEffect class="nav-link" routerLink="/sp">
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="!onLogin">
+        <a
+          mdbWavesEffect
+          class="nav-link txt-bold"
+          routerLinkActive="green darken-3"
+          (click) ="onSignOut()"
+        >
+        <mdb-icon fas icon="user" class="prefix"></mdb-icon>
+          Log Out
+        </a>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>
+<!--/.Navbar-->
+
+<!--Customer navbar-->
+<!--Navbar-->
+<mdb-navbar
+  SideClass="navbar navbar-expand-lg sticky-top navbar-dark green scrolling-navbar"
+  [containerInside]="false"
+  *ngIf="userIsAuthenticated && headerDetails.user_type === 'customer'"
+>
+  <!-- Navbar brand -->
+  <mdb-navbar-brand
+    ><a class="navbar-brand" routerLink="/">
+      <img src="./assets/images/thumb.png" height="60" alt="" /> </a
+  ></mdb-navbar-brand>
+  <links>
+    <ul class="navbar-nav ml-auto txt-800">
+      <li class="nav-item">
+        <a mdbWavesEffect class="nav-link" routerLink="/cust/orders">
+          Place an Order
+        </a>
+      </li>
+      <li class="nav-item">
+        <a mdbWavesEffect class="nav-link" routerLink="/cust">
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="!onLogin">
+        <a
+          mdbWavesEffect
+          class="nav-link txt-bold"
+          routerLinkActive="green darken-3"
+          (click) ="onSignOut()"
+        >
+        <mdb-icon fas icon="user" class="prefix"></mdb-icon>
+          Log Out
+        </a>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>
+<!--/.Navbar-->

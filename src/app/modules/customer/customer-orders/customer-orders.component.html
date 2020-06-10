@@ -1,0 +1,339 @@
+<div class="pd-top-min" >
+
+    <h4 *ngIf="orderType == 'ongoing'">
+      <mat-icon>library_books</mat-icon>
+     <b> Current Order</b>
+    </h4>
+    <h4 *ngIf="orderType == 'completed'">
+      <mat-icon>check_circle</mat-icon>
+     <b> Completed Orders</b>
+    </h4>
+    <h4 *ngIf="orderType == 'cancelled'" >
+      <mat-icon>block</mat-icon>
+     <b> Cancelled Orders</b>
+    </h4>
+
+   
+    <div class="mat-elevation-z8" *ngIf="recievedOrders.length && !showOrder">
+      <table class="table-responsive" mat-table [dataSource]="dataSource" matSort>
+    
+        <!-- ID Column -->
+        <ng-container matColumnDef="oid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > ServiceOrder ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.order_id}} </td>
+        </ng-container>
+    
+        <!-- Progress Column -->
+        <ng-container matColumnDef="sp">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > Service Provider </th>
+          <td mat-cell *matCellDef="let row"> {{row.service_provider.service_provider_name}} </td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > Timesnap </th>
+          <td mat-cell *matCellDef="let row"> {{row.ordered_time.slice(0,10) + ' to ' + row.ordered_time.slice(11,19)}}  </td>
+        </ng-container>
+    
+        <!-- Color Column -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > Service Task </th>
+          <td mat-cell *matCellDef="let row" > {{row.task.task}} </td>
+        </ng-container>
+    
+         <!-- Color Column -->
+         <ng-container matColumnDef="task">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > Fee  </th>
+          <td mat-cell *matCellDef="let row" > {{row.task.rate}} {{row.task.rate_type}} </td>
+        </ng-container>
+    
+    
+         <!-- Action Column -->
+         <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align:center;"> MORE DETAILS </th>
+          <td mat-cell *matCellDef="let row">
+            <button mdbBtn color="green" text="white" class="btn btn-sm text-center" style="border-radius: 30px;"
+            (click) ="showSelectedOrder(row.order_id)">
+              MORE DETAILS
+            </button>
+           </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]"></mat-paginator>
+    </div>
+    
+    <div class="text-center pd-top-min"  *ngIf="!recievedOrders.length && !showOrder">
+      No Orders Here
+    </div>
+    
+    </div>
+    
+
+        <div class="container"   *ngIf = "currentOrder && showOrder">
+
+            <h4 class="modal-title w-100" id="myModalLabel" >
+              <mat-icon>service</mat-icon>Service Order {{currentOrder.order_id}} Details
+            </h4>
+        
+    
+          <div class="modal-body " style="height: 450px; overflow-y: auto;">
+    
+                <!--more info-->
+                <div class="text-center">
+    
+                  <section class="text-center dark-grey-text">
+                    <!--booking info-->
+                    <div class="row ">
+                      <div class="col-md-4 info-text">
+                        ServiceOrder ID
+                      </div>
+                      <div class="col info-input">
+                        <input type="text" matInput disabled value=" {{currentOrder.order_id}}">
+                      </div>
+                    </div>
+    
+                    <div class="row ">
+                      <div class="col-md-4 info-text">
+                        Service Provider
+                      </div>
+                      <div class="col info-input">
+                        <input type="text" matInput disabled value=" {{currentOrder.service_provider.service_provider_name}}">
+                      </div>
+                    </div>
+    
+                    <div class="row ">
+                      <div class="col-md-4 info-text">
+                        Service Category
+                      </div>
+                      <div class="col info-input">
+                        <input type="text" matInput disabled value=" {{currentOrder.service_category}}">
+                      </div>
+                    </div>
+    
+                    <div>
+                    <div class="row ">
+                      <div class="col-md-4 info-text">
+                        Ordered Timesnap
+                      </div>
+                      <div class="col info-input">
+                        <input type="text" matInput disabled value=" {{currentOrder.ordered_time.slice(0,10) + ' ' + currentOrder.ordered_time.slice(11,19)}}">
+                      </div>
+                    </div>
+    
+                    <div>
+                      <hr>
+                      <h5><b>Task Details</b></h5>
+    
+                    <div class="row ">
+                      <div class="col-md-4 info-text">
+                        Orderd Task
+                      </div>
+                      <div class="col info-input">
+                        <input type="text" matInput disabled value=" {{currentOrder.task.task}}">
+                      </div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col-md-4 info-text">
+                          Task Description
+                        </div>
+                        <div class="col info-input">
+                          <textarea type="text" matInput disabled value=" {{currentOrder.description ? currentOrder.description : 'Not Description Available'}}"></textarea>
+                        </div>
+                      </div>
+    
+                    <div class="row ">
+                      <div class="col-md-4 info-text">
+                        Service Rate
+                      </div>
+                      <div class="col info-input">
+                        <input type="text" matInput disabled value=" {{currentOrder.task.rate}} {{currentOrder.task.rate_type}}">
+                      </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-md-4 info-text">
+                          uploaded Images
+                        </div>
+                        <div class="col info-input">
+                          <div class="row">
+                              <div class="col-md-4">
+                                <img [src] ="currentOrder.image1" style="width:100%; margin:10px auto;">
+                              </div>
+                              <div class="col-md-4">
+                                <img [src] ="currentOrder.image1" style="width:100%; margin:10px auto;">
+                              </div>
+                              <div class="col-md-4">
+                                <img [src] ="currentOrder.image1" style="width:100%; margin:10px auto;">
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+    
+                    <hr>
+                    </div>
+    
+                    <div class="row "  *ngIf="currentOrder.state =='completed'">
+                      <div class="col-md-4 info-text">
+                        Total Amount Charged
+                      </div>
+                      <div class="col info-input">
+                        <input type="text" matInput disabled value=" {{currentOrder.ordered_time.slice(0,10) + ' '
+                        + currentOrder.ordered_time.slice(11,19) }}">
+                      </div>
+                    </div>
+    
+    
+                    <div class="row ">
+                      <div class="col-md-4 info-text-net">
+                        State
+                      </div>
+                      <div class="col info-input-net">
+                        <b><input type="text" matInput disabled value=" {{currentOrder.state}}"></b>
+                      </div>
+                    </div>
+    
+    
+                    <hr>
+    
+                  </div>
+    
+                    <!--pending bookings -->
+                    <div class="info-top" >
+                    <button mdbBtn color="darkred" text="white" class="btn  btn-md btn-danger text-center" *ngIf="currentOrder.state == 'ongoing'" 
+                    (click)="cancelDialog.show()" style="border-radius: 30px;">
+                      <span>Send Cancel Request</span>
+                    </button>
+
+                    <button mdbBtn color="green" outline="yes" class="btn  btn-md"
+                    (click)="showOrder = false" style="border-radius: 30px;">
+                      <span>Go Back </span>
+                    </button>
+                  </div>
+    
+    
+                  </section>
+                </div>
+          </div>
+
+        </div>
+
+        <div class="container" *ngIf = "!currentOrder && showOrder">
+         <app-notfound></app-notfound>
+         </div>
+    
+    
+    
+    
+    <!-- cancel booking dialog-->
+    <div mdbModal #cancelDialog="mdbModal"
+    class="modal fade top"
+    id="frameModalTop" tabindex="-1" role="dialog"
+    [config]="{ backdrop: false, ignoreBackdropClick: true }"
+      aria-labelledby="myModalLabel" aria-hidden="true" >
+      <div class="modal-dialog modal-notify modal-danger  modal-dialog-centered" role="document">
+        <!--Content-->
+        <div class="modal-content">
+          <!--Header-->
+          <div class="modal-header">
+            <p class="heading">Cancel Booking</p>
+    
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelDialog.hide()">
+              <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+          </div>
+    
+          <!--Body-->
+          <div class="modal-body">
+    
+            <div class="row">
+              <div class="col-3">
+                <p></p>
+                <p class="text-center">
+                  <mdb-icon fas icon="ban" size="3x" class="mb-3 animated rotateIn"></mdb-icon>
+                </p>
+              </div>
+    
+              <div class="col-9">
+                <h5>Are you sure want to cancel this booking?</h5>
+              </div>
+            </div>
+          </div>
+    
+          <!--Footer-->
+          <div class="modal-footer justify-content-center">
+            <a type="button" mdbBtn color="danger" class="waves-effect"
+            
+            (click)="cancelDialog.hide()" 
+            mdbWavesEffect>Cancel Booking
+              <mdb-btn far icon="ban" class="ml-1"></mdb-btn>
+            </a>
+            <a type="button" mdbBtn color="danger" outline="true" class="waves-effect" mdbWavesEffect
+            (click)="cancelDialog.hide()"
+              data-dismiss="modal">No, thanks</a>
+          </div>
+        </div>
+        <!--/.Content-->
+      </div>
+    </div>
+    
+    
+    <!-- confirm booking dialog-->
+    <div mdbModal #confirmDialog="mdbModal"
+    class="modal fade top"
+    id="frameModalTop" tabindex="-1" role="dialog"
+    [config]="{ backdrop: false, ignoreBackdropClick: true }"
+      aria-labelledby="myModalLabel" aria-hidden="true"
+       >
+      <div class="modal-dialog modal-notify modal-success modal-dialog-centered" role="document">
+        <!--Content-->
+        <div class="modal-content">
+          <!--Header-->
+          <div class="modal-header">
+            <p class="heading">Confirm Booking</p>
+    
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="confirmDialog.hide()">
+              <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+          </div>
+    
+          <!--Body-->
+          <div class="modal-body">
+    
+            <div class="row">
+              <div class="col-3">
+                <p></p>
+                <p class="text-center">
+                  <mdb-icon fas icon="check" size="3x" class="mb-3 animated rotateIn"></mdb-icon>
+                </p>
+              </div>
+    
+              <div class="col-9">
+                <h5>Are you sure want to mark this booking as <b>completed</b> ?</h5>
+              </div>
+            </div>
+          </div>
+    
+          <!--Footer-->
+          <div class="modal-footer justify-content-center">
+            <a type="button" mdbBtn color="success" class="waves-effect"
+           
+            (click)="confirmDialog.hide()" 
+            mdbWavesEffect> Mark as Completed
+              <mdb-btn far icon="check" class="ml-1"></mdb-btn>
+            </a>
+            <a type="button" mdbBtn color="success" outline="true" class="waves-effect" mdbWavesEffect
+            (click)="confirmDialog.hide()"
+              data-dismiss="modal">No, thanks</a>
+          </div>
+        </div>
+        <!--/.Content-->
+      </div>
+    </div>
+    

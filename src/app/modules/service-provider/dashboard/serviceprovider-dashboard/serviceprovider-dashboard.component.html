@@ -1,0 +1,106 @@
+<mat-sidenav-container class="sidenav-container" >
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false">
+  
+      <!--profile pic-->
+      <div class="pd-img">
+        <img [src]="serviceProvider ? serviceProvider.profile_pic: './assets/images/spprofilephoto.jpg'" alt="Merchant Pic" class="img-thumbnail" >
+        <h5 class="txt-white pd-top-min text-center"> {{serviceProvider ? serviceProvider.first_name: 'Loading..'}} </h5>
+      </div>
+  
+      <mat-nav-list style="padding-top:20px;">
+          <a class="txt-white row" mat-list-item [ngClass] ="home"
+          (click)="navHome()"  routerLink="/sp">
+              <div class="col-md-11 side-start " >
+                <mat-icon >home</mat-icon>
+                <span class="side-text">  Home </span>
+              </div>
+              <div class="ol-md-1 side-end">
+              <mat-icon >keyboard_arrow_right</mat-icon>
+            </div>
+          </a>
+  
+  
+  
+        <a class="txt-white row" mat-list-item  [ngClass] ="orders"
+        (click)="navOrders()"   routerLink="/sp/orders">
+          <div class="col-md-11 side-start">
+            <mat-icon >business_centert</mat-icon>
+            <span class="side-text">  View Orders </span>
+          </div>
+          <div class="ol-md-1 side-end">
+          <mat-icon >keyboard_arrow_right</mat-icon>
+        </div>
+        </a>
+
+
+        <a class="txt-white row" mat-list-item  [ngClass] ="report"
+        (click)="navReports()"   routerLink="/sp/reports">
+          <div class="col-md-11 side-start">
+            <mat-icon >book</mat-icon>
+            <span class="side-text">  Report Wizard </span>
+          </div>
+          <div class="ol-md-1 side-end">
+          <mat-icon >keyboard_arrow_right</mat-icon>
+        </div>
+        </a>
+  
+  
+  
+  
+        <a class="txt-white row" mat-list-item [ngClass] ="profile"
+        (click)="navProfile()"  routerLink="/sp/profile">
+          <div class="col-md-11 side-start">
+            <mat-icon >face</mat-icon>
+            <span class="side-text">  My Profile</span>
+          </div>
+          <div class="ol-md-1 side-end">
+          <mat-icon >keyboard_arrow_right</mat-icon>
+        </div>
+        </a>
+
+        <a class="txt-white row" mat-list-item [ngClass] =""
+        (click)="navProfile()"  routerLink="">
+          <div class="col-md-11 side-start">
+            <mat-icon >book</mat-icon>
+            <span class="side-text"> Settings</span>
+          </div>
+          <div class="ol-md-1 side-end">
+          <mat-icon >keyboard_arrow_right</mat-icon>
+        </div>
+        </a>
+  
+
+      </mat-nav-list>
+  
+    </mat-sidenav>
+  
+    <!--dashboard content-->
+    <mat-sidenav-content>
+      <mat-toolbar color="green" class="app-toolbar" *ngIf="(isHandset$ | async) === true">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span style="font-size:16px;"> Open Menu </span>
+      </mat-toolbar>
+  
+      <!--dashboard content-->
+   
+        <router-outlet></router-outlet>
+ 
+      <!--end dashboard content-->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+  
+  
+  
+  
+  

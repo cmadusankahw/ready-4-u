@@ -1,0 +1,139 @@
+<mat-card class="shadow">
+  <mat-card-header class="green white-text text-center py-4">
+    <h2>
+      Join us to Earn more!
+    </h2>
+  </mat-card-header>
+
+  <!--Card content-->
+  <mat-card-body class="px-lg-5 pt-0">
+    <!-- Form -->
+
+    <br />
+    <div class="text-center p-md-3">
+      <p>
+        Get register as a Service Individual - if you do not belong to any
+        service firm registered.
+      </p>
+      <p>
+        Get register as a Service Firm Owner - if you own a service firm & hope
+        to provide service.
+      </p>
+      <p>
+        Get register as a service Firm owner - if you belong to any service firm
+        pre registered.
+      </p>
+    </div>
+    <form style="color: #2b9c09;" #signUpForm = "ngForm" (submit) = "signupUser(signUpForm)">
+      <div class="text-center">
+        <mat-form-field class="mfield">
+          <mat-label>Service Role</mat-label>
+          <mat-select required name="user_type"  ngModel #userType="ngModel">
+            <mat-option value="serviceprovider">
+              Service Individual</mat-option>
+            <mat-option value="firmowner">        
+              Service Firm Owner</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userType.invalid"> Please select service Type</mat-error>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="mfield">
+          <mat-label>Select your District</mat-label>
+          <mat-select required name="district" ngModel #DisT= "ngModel">
+            <mat-option>Select a District</mat-option>
+            <mat-option [value]="dis" *ngFor="let dis of districts">{{dis}}</mat-option>
+            <mat-error *ngIf="DisT.invalid"> Please select your District</mat-error>
+          </mat-select>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="mfield">
+          <input matInput placeholder="Your NIC" required
+          pattern="^([0-9]{9}[x|X|v|V]|[0-9]{12})$"
+          name="nic"
+          #nic="ngModel" ngModel/>
+          <mat-error *ngIf="nic.invalid"> Please enter a valid NIC</mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field class="mfield">
+          <mat-label>Your Gender</mat-label>
+          <mat-select required name="gender" #Gender="ngModel" ngModel >
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+          <mat-error *ngIf="Gender.invalid"> Please select your Gender</mat-error>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="mfield">
+          <mat-label>Service Category</mat-label>
+          <mat-select required #ServiceCat = "ngModel" ngModel name="category">
+            <mat-option [value] ="cat.category" *ngFor="let cat of categories">{{cat.category}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userType.invalid"> Please select your service category</mat-error>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="mfield">
+          <mat-label>Your BirthDay</mat-label>
+          <input matInput
+          [matDatepicker]="picker"
+          required
+          name="birthday"
+          #birthDay="ngModel"
+          ngModel
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="birthDay.invalid">Please Select your BirthDay</mat-error>
+        </mat-form-field>
+
+        <hr />
+        <mat-form-field class="mfield">
+          <input matInput type="text" placeholder="Address Line 1"
+          required
+          name="address1"
+          #address1="ngModel"
+          ngModel>
+          <mat-error *ngIf="address1.invalid">Your address is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="mfield">
+          <input matInput type="text"
+          placeholder="Address Line 2"
+          name="address2"
+          ngModel>
+        </mat-form-field>
+        <br>
+      <hr />
+
+      <!-- Sign up complete button -->
+      <button
+        mdbBtn
+        color="green"
+        rounded="true"
+        block="true"
+        class="my-4 waves-effect"
+        mdbWavesEffect
+        type="submit"
+      >
+        Complete Sign Up
+      </button>
+      </div>
+    </form>
+    <hr />
+    <div class="text-center">
+      <!-- Terms of service -->
+      <p>
+        By clicking <em>Sign up</em> you agree to our
+        <a href="" target="_blank">' terms of service</a>
+      </p>
+    </div>
+    `
+    <!-- Form -->
+  </mat-card-body>
+</mat-card>

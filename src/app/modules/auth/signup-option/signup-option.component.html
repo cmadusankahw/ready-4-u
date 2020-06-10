@@ -1,0 +1,41 @@
+
+  <div class="sign-up-content">
+    <section class="text-center px-md-5 mx-md-5 dark-green-text">
+      <div class="row mb-5">
+        <div class="col-md-4 mx-auto">
+          <img
+            src="./assets/images/thumb.png"
+            class="img-fluid"
+            alt="join us" style="width:60%"
+          />
+        </div>
+      </div>
+
+      <h2 class="font-weight-bold mb-4 pb-2">Ready to Serve you !</h2>
+      <h4 class="font-weight-bold mb-4 pb-2">
+        Pick your Role with Ready-4-U
+      </h4>
+    </section>
+
+    <button
+      mbdBtn
+      mdbWavesEffect
+      type="button"
+      class="btn btn-success"
+      (click)="gotoUser()"
+      routerLink="/register/general"
+    >
+      I'm Customer
+    </button>
+    <button
+      mdbBtn
+      mdbWavesEffect
+      type="button"
+      class="btn btn-outline-success"
+      (click)="gotoSP()"
+      routerLink="/register/general"
+    >
+      I'm Service Provider
+    </button>
+  </div>
+

@@ -1,0 +1,64 @@
+<!-- Card -->
+<div *ngIf="!showTask">
+<div class="text-center md-4 service-select-heading">
+  <h2>Find a Service Category...</h2>
+  <img src="./assets/images/spselelct.jpg" style="width:70%; ">
+</div>
+<hr />
+
+<div class="row container-fluid service-holder">
+  <div class="card service-card shadow text-center" *ngFor="let service of serviceCategories" (click) = "showTaskList(service.category)">
+    <!-- Card content -->
+    <a mdbWavesEffect>
+      <div class="card-body">
+        <div class="text-center service-text">
+          <i class="{{ service.icon }}"></i>
+        </div>
+        <!-- Title -->
+        <h4 class="card-title">{{ service.category }}</h4>
+      </div>
+    </a>
+  </div>
+</div>
+</div>
+
+<div *ngIf="showTask">
+  <div class="text-center md-4 service-select-heading">
+    <h2>Select a Service Task....</h2>
+    <img src="./assets/images/spselelct.jpg" style="width:70%; ">
+  </div>
+  <hr />
+  
+  <div class="row container-fluid service-holder">
+    <div class="card task-card shadow text-center" *ngFor="let task of selectedCategory.tasks"
+     (click) = "viewAvailableServiceProviders(selectedCategory.category, task.id)">
+      <!-- Card content -->
+      <a mdbWavesEffect>
+        <div class="card-body">
+          <div class="row  container-fluid">
+            <div class="col">
+              <div class="task-text">
+                <i class="{{ selectedCategory.icon }}"></i>
+              </div>
+            </div>
+              <div class="col">
+                <!-- Title -->
+                <span class="task-title">{{ task.task }}</span> <br>
+                <span style="color:darkgray;"> {{selectedCategory.category}}</span>
+              </div>
+           
+          </div>
+        
+        </div>
+      </a>
+    </div>
+  </div>
+  <hr />
+  <div class="text-center">
+    <button mdbBtn mdbWavesEffect class="btn btn-md" style="border-radius:30px;" (click) = "showTask = false"
+    color="green">
+      Select Another Category
+    </button>
+  </div>
+
+</div>

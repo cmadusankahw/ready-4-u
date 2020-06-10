@@ -1,0 +1,99 @@
+
+  <section class="map-section" *ngIf="loaded">
+
+    <!-- map here-->
+    <div class="map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15871.953595116125!2d80.5327317!3d5.9963279!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae1418b34b31de9%3A0x5fc03e940e80049!2sRH%20Flower%20Nursery!5e0!3m2!1sen!2slk!4v1588725020794!5m2!1sen!2slk" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+    </div>
+
+    <!-- service provider stuff here-->
+    <div class="sp-details">
+      <div class="row">
+        <div class="col-md-8 sp-details" >
+          <table>
+              <tr >
+                <th>
+                <img src="./assets/images/spprofilephoto.jpg" class="profile-img">
+              </th>
+              <th class="sp-names">
+                <span class="sp-name"> Sample Service Provider
+                </span><br><p class="middle-sp"></p>
+                <span class="sp-des">Estimated arriaval:</span>
+               <p class="est-arrival"> 2 h 15 min</p>
+              </th>
+              </tr>
+            </table>
+
+          </div>
+        <div class="col-md-4" class="sp-contact text-center">
+          <div class="container-fluid text-center">
+              <button mdbBtn mdbWavesEffect class="sp-btn" color="green" text="white" >
+                <i class="fa fa-phone" aria-hidden="true"></i>  Call Now
+              </button>
+              <button mdbBtn mdbWavesEffect class="sp-btn" color="green" text="white" outline="yes"  
+              (click) = "showProfile.show()">
+                <i class="fa fa-face" aria-hidden="true"></i> View Profile </button>
+              </div>
+          </div>
+
+      </div>
+    </div>
+    </section>
+
+    <div class="text-center" *ngIf="!loaded" style="padding-top:20%;">
+      <mat-spinner color="accent" style="margin:0 auto;"></mat-spinner>
+    </div>
+
+
+
+<!--View Service Modal-->
+<div
+mdbModal
+#showProfile="mdbModal"
+class="modal fade"
+tabindex="-1"
+role="dialog"
+aria-labelledby="myBasicModalLabel"
+[config]="{ backdrop: false, ignoreBackdropClick: true }"
+aria-hidden="true"
+
+>
+<div
+  class="modal-dialog modal-dialog-centered modal-lg"
+  role="document"
+  style="overflow-y: initial !important"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button
+        type="button"
+        class="close pull-right"
+        aria-label="Close"
+        (click)="showProfile.hide()"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+      <h4 class="modal-title w-100" id="myModalLabel" >
+        <mat-icon>service</mat-icon>Hired Service Provider
+      </h4>
+    </div>
+
+    <div class="modal-body " style="height: 500px; overflow-y: auto;">
+
+      <app-sprovider-profile [isowner] = "false"> </app-sprovider-profile>
+
+    </div>
+
+    <div class="modal-footer">
+      <button
+        mdbBtn
+        color="link"
+        (click)="showProfile.hide()"
+        mdbWavesEffect
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,53 @@
+<div class="container-fluid" >
+    <div class="currentOrder" *ngIf="currentOrder">
+        <div class="heading text-center pd-top">
+            <h3> <b> <mdb-icon fas icon="envelope"> </mdb-icon> You have a New Order </b></h3>
+        </div>
+        <hr>
+        <div class="res-order text-center">
+            <mat-expansion-panel  hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Recieved Order: {{currentOrder.order_id}}
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Expand to view order details
+                    <mat-icon>map</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+            
+                <div class="orderContent pd-top text-center">
+                    <h4><b>Order Decription:</b></h4>
+                    <p class="order-des"> {{currentOrder.description}}</p>
+                    <hr>
+                    <h4><b>Order Images:</b></h4>
+                    <div class="row" class="res-imgs">
+                        <div class="col-md-4">
+                          <img [src] ="currentOrder.image1" style="width:100%; margin:10px auto;">
+                        </div>
+                        <div class="col-md-4">
+                          <img [src] ="currentOrder.image2" style="width:100%; margin:10px auto;">
+                        </div>
+                        <div class="col-md-4">
+                          <img [src] ="currentOrder.image3" style="width:100%; margin:10px auto;">
+                        </div>
+                    </div>
+                </div>
+            
+                <mat-action-row>
+                  <button mat-button color="green" routerLink="/sp/map"> Approve </button>
+                  <button mat-button color="warn" > Cancel Order </button>
+                </mat-action-row>
+              </mat-expansion-panel>
+        </div>
+        <hr>
+
+    </div>
+
+    <div class="text-center pd-top-lg" *ngIf ="!currentOrder">
+        <div class="heading text-center pd-top">
+            <h4> <b> <mdb-icon fas icon="envelope">You have no current orders</mdb-icon></b></h4>
+        </div>
+        <hr>
+    </div>
+</div>

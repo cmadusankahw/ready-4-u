@@ -1,0 +1,114 @@
+<div *ngIf="!hireNow">
+<div class="text-center md-4 service-select-heading">
+    <h2>Select an available Service Provider...</h2>
+    <img src="./assets/images/spselelct.jpg" style="width:70%; ">
+  </div>
+  <hr />
+  
+  <div class="row container-fluid service-holder" *ngIf="serviceProviders">
+    <div class="row search-result shadow container-fluid" mdbWavesEffect *ngFor="let sp of serviceProviders">
+        <div class="col-md-2">
+          <img src="{{sp.profile_pic}}" style="width:180px"  >
+        </div>
+          <div class="col-md-5 search-result-pd">
+            <span class="search-result-heading"> {{sp.first_name + ' ' + sp.last_name}}</span>
+            <br> 
+            <span class="search-result-sub"> {{sp.service_category}}</span>
+            <br>
+            <span class="search-result-price"> Rs. {{sp.tasks[taskId].rate}} {{sp.tasks[taskId].rate_type}} </span>
+          </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4 search-result-btn-pd">
+          <div style="text-align:right;">
+            <a role="button" class="btn btn-lg" color="green" text="white" mdbBtn mdbWavesEffect style="border-radius: 30px; margin:0 auto;"
+            (click) ="hireNow = true"  (click)="serviceProviderSelected(sp.user_id)">
+            <mdb-icon fas icon="book"></mdb-icon> Hire Now</a>
+          </div>
+           <div class="rating-mini">
+            <ngb-rating readonly="true" [rate]="sp.tasks[taskId].rating" max="5">
+              <ng-template  let-fill="fill" let-index="index">
+                <span class="star-mini" [class.filled]="fill === 100">&#9733;</span>
+              </ng-template>
+            </ngb-rating>
+          </div>
+        </div>
+
+      </div>
+  </div>
+
+  <div class="container-fluid text-center" *ngIf="!serviceProviders">
+      <app-notfound></app-notfound>
+  </div>
+
+</div>
+
+<div *ngIf="hireNow">
+    <div class="text-center md-4 service-select-heading">
+        <h2>Place a Service Order</h2>
+    </div>
+        <div class="sp-details">
+            <div class="row container-fluid">
+                <div class="col-md-2 text-center">
+                    <img src="{{selectedServiceProvider.profile_pic}}" class="shadow top-img" style="margin:0 auto;" >
+                </div>
+                <div class="col top-c">
+                    <span class="top-name"> <b>  {{selectedServiceProvider.first_name + ' ' + selectedServiceProvider.last_name}}</b></span><br>
+                    <span class="top-type">{{selectedServiceProvider.service_category}}</span><br><br>
+                    <span  class="top-text"> Please provide details of the service you required below..</span>
+                </div>
+            </div>     
+        </div>
+      <hr />
+
+      <form class="service-form" #taskDetailForm=ngForm (submit) = "placeOrder(taskDetailForm)">
+      <div class="details-input container pd-top-min">
+        <h4><b> State information regarding your required service task: {{selectedServiceProvider.tasks[taskId].task}} below.. </b></h4>
+        <span>  A rich explanation may help to get the best service as required..</span><br><br>
+        <mat-form-field class="full-width">
+        <textarea matInput rows="5" name="task_description" ngModel placeholder="I want this service like..."></textarea>
+        </mat-form-field>
+      </div>
+      <hr>
+      <div class="details-input container">
+        <h4><b> Upload Images related to your Servie Task..</b></h4>
+      </div>
+      <div class="row details-input container text-center">
+        <div class="col-md-1"></div>
+        <div class="col">
+          <a role="button" mdbWavesEffect (click)="sidea.click()">
+            <img [src]="imageUrls[0] ? imageUrls[0] : './assets/images/noimg.png'"  alt="front side" class="img-cls">
+          </a>
+          <input type="file" hidden="true" id="sidea" #sidea (change)="onImagesUploaded($event)">
+          <p><b>Image 01</b></p>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col">
+          <a role="button" mdbWavesEffect (click)="sideb.click()">
+            <img [src]="imageUrls[1] ? imageUrls[1] : './assets/images/noimg.png'" alt="front side"  class="img-cls">
+          </a>
+          <input type="file" hidden="true" id="sideb" #sideb (change)="onImagesUploaded($event)">
+          <p><b>Image 2</b></p>
+        </div>
+
+        <div class="col-md-1"></div>
+        <div class="col">
+          <a role="button" mdbWavesEffect (click)="sideb.click()">
+            <img [src]="imageUrls[2] ? imageUrls[2] : './assets/images/noimg.png'" alt="front side"  class="img-cls">
+          </a>
+          <input type="file" hidden="true" id="sideb" #sideb (change)="onImagesUploaded($event)">
+          <p><b>Image 3</b></p>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <hr>
+      <div class="button-set text-center" style="padding-bottom:30px;">
+        <button class="btn btn-lg" color="green" text="white" mdbBtn mdbWavesEffect style="border-radius: 30px; margin:10px auto; margin-right:15px; "
+         type="submit">
+        <mdb-icon fas icon="book"></mdb-icon> Place Order</button>
+        <button class="btn btn-lg" color="green" outline="yes"  mdbBtn mdbWavesEffect style="border-radius: 30px; margin:10px auto;"
+        >
+        <mdb-icon fas icon="book"></mdb-icon> Go Back </button>
+      </div>
+    </form>
+    </div>
