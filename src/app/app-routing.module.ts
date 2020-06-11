@@ -44,7 +44,7 @@ const routes: Routes = [
     { path: 'asp/:category_id', component: ServiceproviderListComponent },
     { path: 'orders', component: CustomerDordersComponent },
     { path: 'profile', component: CustomerDprofileComponent },
-    { path: 'map', component: MapCustomerComponent },
+    { path: 'map/:id', component: MapCustomerComponent },
     { path: 'task/time', component: TaskTimeCountdownComponent },
     { path: '**', component: NotfoundComponent },
   ] },

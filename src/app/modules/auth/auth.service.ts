@@ -92,6 +92,20 @@ export class AuthService {
           this.serviceproviderUpdated.next(this.serviceprovider);
         }
       );
+  };
+
+   // get serviceprovider after login
+   getServiceproviderById(spId: string) {
+    this.http
+      .get<{ message: string; serviceprovider: ServiceProvider }>(
+        this.url + 'auth/get/sprovider/' + spId
+      )
+      .subscribe(
+        (recievedServiceprovider) => {
+          this.serviceprovider = recievedServiceprovider.serviceprovider;
+          this.serviceproviderUpdated.next(this.serviceprovider);
+        }
+      );
   }
 
 

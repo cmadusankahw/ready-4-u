@@ -66,7 +66,7 @@
         <h4><b> State information regarding your required service task below.. </b></h4>
         <span>  A rich explanation may help to get the best service as required..</span><br><br>
         <mat-form-field class="full-width">
-        <textarea matInput rows="5" name="task_description" ngModel placeholder="I want this service like..."></textarea>
+        <textarea matInput rows="5" name="description" ngModel placeholder="I want this service like..."></textarea>
         </mat-form-field>
       </div>
       <hr>
@@ -76,27 +76,27 @@
       <div class="row details-input container text-center">
         <div class="col-md-1"></div>
         <div class="col">
-          <a role="button" mdbWavesEffect (click)="sidea.click()">
-            <img [src]="imageUrls[0] ? imageUrls[0] : './assets/images/noimg.png'"  alt="front side" class="img-cls">
+          <a role="button" mdbWavesEffect (click)="image01.click()">
+            <img [src]="image01Url ? image01Url : './assets/images/noimg.png'"  alt="front side" class="img-cls">
           </a>
-          <input type="file" hidden="true" id="sidea" #sidea (change)="onImagesUploaded($event)">
+          <input type="file" hidden="true" id="img1" #image01 (change)="onImage01Uploaded($event)">
           <p><b>Image 01</b></p>
         </div>
         <div class="col-md-1"></div>
         <div class="col">
-          <a role="button" mdbWavesEffect (click)="sideb.click()">
-            <img [src]="imageUrls[1] ? imageUrls[1] : './assets/images/noimg.png'" alt="front side"  class="img-cls">
+          <a role="button" mdbWavesEffect (click)="image02.click()">
+            <img [src]="image02Url ? image02Url : './assets/images/noimg.png'" alt="front side"  class="img-cls">
           </a>
-          <input type="file" hidden="true" id="sideb" #sideb (change)="onImagesUploaded($event)">
+          <input type="file" hidden="true" id="image02" #image02 (change)="onImage02Uploaded($event)">
           <p><b>Image 2</b></p>
         </div>
 
         <div class="col-md-1"></div>
         <div class="col">
-          <a role="button" mdbWavesEffect (click)="sideb.click()">
-            <img [src]="imageUrls[2] ? imageUrls[2] : './assets/images/noimg.png'" alt="front side"  class="img-cls">
+          <a role="button" mdbWavesEffect (click)="image03.click()">
+            <img [src]="image03Url ? image03Url : './assets/images/noimg.png'" alt="front side"  class="img-cls">
           </a>
-          <input type="file" hidden="true" id="sideb" #sideb (change)="onImagesUploaded($event)">
+          <input type="file" hidden="true" id="image03" #image03 (change)="onImage03Uploaded($event)">
           <p><b>Image 3</b></p>
         </div>
         <div class="col-md-1"></div>

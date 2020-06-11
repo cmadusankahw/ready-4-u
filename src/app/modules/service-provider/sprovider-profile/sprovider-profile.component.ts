@@ -1,22 +1,20 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
-import { AuthService } from 'src/app/modules/auth/auth.service';
-import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material';
-import { Router, NavigationEnd } from '@angular/router';
 import { DatePipe } from '@angular/common';
-
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/modules/auth/auth.service';
 
 import { ErrorComponent } from 'src/app/error/error.component';
 import { ServiceProvider } from '../../auth/auth.model';
 import { Task, ServiceCategory } from '../../services/service.model';
 import { ServiceService } from '../../services/service.service';
 
-
 @Component({
   selector: 'app-sprovider-profile',
   templateUrl: './sprovider-profile.component.html',
-  styleUrls: ['./sprovider-profile.component.scss']
+  styleUrls: ['./sprovider-profile.component.scss'],
 })
 export class SproviderProfileComponent implements OnInit, OnDestroy {
 
@@ -24,30 +22,31 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
   private spSub: Subscription;
   private catSub: Subscription;
 
-  @Input() isowner;
+  @Input() public isowner;
 
   // edit profile mode
-  editmode = false;
+  public editmode = false;
 
-  serviceProvider: ServiceProvider;
+  public serviceProvider: ServiceProvider;
 
   // image to upload
-  image: File;
-  imageUrl: any = './assets/images/noimg.png';
-
+  public image: File;
+  public imageUrl: any = './assets/images/noimg.png';
 
   // Districts
-  districts = ['Colombo', 'Kaluthara', 'Galle', 'Matara', 'Matale', 'Kandy', 'Gampaha' , 'Hambanthota', 'Negamobo', 'Chiillaw', 'Badulla' , 'Nuwara Eliya'];
+  public districts = ['Colombo', 'Kaluthara', 'Galle', 'Matara', 'Matale', 'Kandy', 'Gampaha' , 'Hambanthota', 'Negamobo', 'Chiillaw', 'Badulla' , 'Nuwara Eliya'];
 
   // service categories
-  serviceCategories : ServiceCategory[];
+  public serviceCategories: ServiceCategory[];
 
   // rate types
-  rateTypes = ['per Hour', 'per Day'];
+  public rateTypes = ['per Hour', 'per Day'];
 
-  newTasks: Task[]= [
-    {id:'', task: '', rate: 0, rate_type: 'per Day', rating: 0}
+  public newTasks: Task[] = [
+    {id: '', task: '', rate: 0, rate_type: 'per Day', rating: 0},
   ];
+
+  public spId: string;
 
   constructor(private authService: AuthService,
               public dialog: MatDialog,
@@ -55,21 +54,25 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
               private router: Router,
               private serviceService: ServiceService) { }
 
-   ngOnInit() {
+   public ngOnInit() {
     this.serviceService.getServiceCategories();
     this.catSub = this.serviceService.getServiceCategoriesUpdateListener().subscribe (
-     cat => {
+     (cat) => {
          this.serviceCategories = cat;
          console.log(this.serviceCategories);
      });
-    this.authService.getServiceprovider();
+    if (this.spId) {
+      this.authService.getServiceproviderById(this.spId);
+     } else {
+      this.authService.getServiceprovider();
+     }
     this.spSub = this.authService.getServiceprovidertUpdateListener().subscribe (
-      sprovider => {
+      (sprovider) => {
           this.serviceProvider = sprovider;
       });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.spSub) {
       this.spSub.unsubscribe();
     }
@@ -80,7 +83,7 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
     this.image = null;
   }
 
-  changePassword(recievedForm: NgForm) {
+  public changePassword(recievedForm: NgForm) {
     if (recievedForm.invalid) {
       console.log('Form invalid');
     }
@@ -91,7 +94,7 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
   }
 
   // edit user
-  editUser(editForm: NgForm) {
+  public editUser(editForm: NgForm) {
     if (editForm.invalid) {
       console.log('Form Invalid');
     } else {
@@ -114,7 +117,7 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
         isavailable: this.serviceProvider.isavailable,
         location: this.serviceProvider.location,
         firm: this.serviceProvider.firm,
-        tasks: this.serviceProvider.tasks
+        tasks: this.serviceProvider.tasks,
         };
       this.authService.updateServiceprovider(sp, this.image);
       this.spSub = this.authService.getServiceprovidertUpdateListener()
@@ -134,7 +137,7 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
   }
 
     // profile pic uploading
-    onImageUploaded(event: Event) {
+    public onImageUploaded(event: Event) {
       const file = (event.target as HTMLInputElement).files[0];
       const mimeType = file.type;
       if (mimeType.match(/image\/*/) == null) {
@@ -149,11 +152,11 @@ export class SproviderProfileComponent implements OnInit, OnDestroy {
     }
 
     // add new task input
-    newTask(task: Task) {
+    public newTask(task: Task) {
       task.id = task.task.trim();
       this.serviceProvider.tasks.push(task);
       this.newTasks.push({
-        id: '', task: '', rate: 0, rate_type: '',rating: 0
+        id: '', task: '', rate: 0, rate_type: '', rating: 0,
       });
     }
 

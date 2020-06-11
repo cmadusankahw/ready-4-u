@@ -34,9 +34,7 @@ export class ServiceService {
     public dialog: MatDialog
   ) {}
 
-  // get methods
 
-  // get service category list
   getServiceCategories() {
     this.http
       .get<{ message: string; categories: ServiceCategory[] }>(this.url + 'service/cat')
@@ -55,7 +53,6 @@ export class ServiceService {
       });
   }
 
-  // get serviceprovider after login
   getOrders() {
     this.http
       .get<{ message: string; orders: Order[] }>(
@@ -68,7 +65,7 @@ export class ServiceService {
         });
   }
 
-  // get custmer after login
+ 
   getOrder(orderId: string) {
     this.http
       .get<{ message: string; order: Order }>(
@@ -81,7 +78,6 @@ export class ServiceService {
         });
   }
 
-  // listners for subjects
 
   getServiceCategoriesUpdateListener() {
     return this.serviceCategoriesUpdated.asObservable();
@@ -99,7 +95,39 @@ export class ServiceService {
     return this.ordersUpdated.asObservable();
   }
 
-
-
+ 
+   // add new service
+   createOrder(order: Order, images: File[]) {
+    const serviceData = new FormData();
+    for (const image of images) {
+      if (image) {
+        serviceData.append('images[]', image, image.name);
+      }
+    }
+    console.log(serviceData);
+    this.http.post<{imagePaths: string[]}>(this.url + 'service/order/img', serviceData )
+      .subscribe ((recievedImages) => {
+        console.log(recievedImages);
+        if (recievedImages.imagePaths[0]) {
+          order.image1 = recievedImages.imagePaths[0];
+        }
+        if (recievedImages.imagePaths[1]) {
+          order.image2 = recievedImages.imagePaths[1];
+        }
+        if (recievedImages.imagePaths[2]) {
+          order.image3 = recievedImages.imagePaths[2];
+        }
+        this.http.post<{ message: string, result: Order }>(this.url + 'service/order/add', order)
+        .subscribe((recievedData) => {
+          console.log(recievedData.message);
+          this.order  = recievedData.result;
+          this.orderUpdated.next(this.order);
+          setTimeout( () => {
+            this.router.navigate(['cust/map/' + recievedData.result.order_id]);
+          }, 500);
+         
+      });
+    });
+  }
 
 }

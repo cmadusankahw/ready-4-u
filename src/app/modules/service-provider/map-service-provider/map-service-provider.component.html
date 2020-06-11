@@ -2,8 +2,16 @@
 
   <!-- map here-->
   <div class="map">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15871.953595116125!2d80.5327317!3d5.9963279!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae1418b34b31de9%3A0x5fc03e940e80049!2sRH%20Flower%20Nursery!5e0!3m2!1sen!2slk!4v1588725020794!5m2!1sen!2slk" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-  </div>
+    <agm-map 
+    [latitude]="recievedLocation.lat"
+    [longitude]="recievedLocation.lang"
+    [zoom]="zoom" >
+      <agm-marker
+      [latitude]="recievedLocation.lat"
+      [longitude]="recievedLocation.lang"  [markerDraggable]="true"
+      (dragEnd)="markerDragEnd($event)" ></agm-marker>
+    
+    </agm-map>  </div>
 
   <!-- service provider stuff here-->
   <div class="sp-details">

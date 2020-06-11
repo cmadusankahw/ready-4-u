@@ -28,11 +28,13 @@ export interface Order {
     service_provider: {
         user_id: string;
         service_provider_name: string,
-        email: string
+        email: string;
+        profile_pic: string;
     };
     customer: {
         user_id: string;
         customer_name: string;
         email: string;
+        profile_pic: string;
     };
 }

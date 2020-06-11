@@ -3,8 +3,17 @@
 
     <!-- map here-->
     <div class="map">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15871.953595116125!2d80.5327317!3d5.9963279!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae1418b34b31de9%3A0x5fc03e940e80049!2sRH%20Flower%20Nursery!5e0!3m2!1sen!2slk!4v1588725020794!5m2!1sen!2slk" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-    </div>
+      <agm-map 
+      [latitude]="recievedLocation.lat"
+      [longitude]="recievedLocation.lang"
+      [zoom]="zoom" >
+        <agm-marker
+        [latitude]="recievedLocation.lat"
+        [longitude]="recievedLocation.lang"  [markerDraggable]="true"
+        (dragEnd)="markerDragEnd($event)" ></agm-marker>
+      
+      </agm-map>
+   </div>
 
     <!-- service provider stuff here-->
     <div class="sp-details">
@@ -13,10 +22,10 @@
           <table>
               <tr >
                 <th>
-                <img src="./assets/images/spprofilephoto.jpg" class="profile-img">
+                <img src="{{order ? order.service_provider.profile_pic : './assets/images/noimg.png' }}" class="profile-img">
               </th>
               <th class="sp-names">
-                <span class="sp-name"> Sample Service Provider
+                <span class="sp-name"> {{order ? order.service_provider.service_provider_name : ' Loading..'}}
                 </span><br><p class="middle-sp"></p>
                 <span class="sp-des">Estimated arriaval:</span>
                <p class="est-arrival"> 2 h 15 min</p>
@@ -63,7 +72,7 @@ aria-hidden="true"
   role="document"
   style="overflow-y: initial !important"
 >
-  <div class="modal-content">
+  <div class="modal-content" *ngIf="order">
     <div class="modal-header">
       <button
         type="button"
@@ -80,7 +89,7 @@ aria-hidden="true"
 
     <div class="modal-body " style="height: 500px; overflow-y: auto;">
 
-      <app-sprovider-profile [isowner] = "false"> </app-sprovider-profile>
+      <app-sprovider-profile [isowner] = "false" [spId] = "order.service_provider.user_id"> </app-sprovider-profile>
 
     </div>
 

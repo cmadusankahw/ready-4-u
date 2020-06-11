@@ -34,11 +34,13 @@ export class ServiceproviderDhomeComponent implements OnInit, OnDestroy {
         user_id: 'USER-01',
         service_provider_name: '',
         email: '',
+        profile_pic: ''
     },
     customer: {
         user_id: 'USER-01',
         customer_name: '',
-        email: ''
+        email: '',
+        profile_pic: ''
     }
   };
 

@@ -80,6 +80,7 @@ import { ServiceproviderOrdersComponent } from './modules/service-provider/servi
 import { ServiceproviderDashStatComponent } from './modules/service-provider/dashboard/serviceprovider-dash-stat/serviceprovider-dash-stat.component';
 import { ServiceproviderReportsComponent } from './modules/service-provider/serviceprovider-reports/serviceprovider-reports.component';
 import { ServiceproviderTaskCountdownComponent } from './modules/service-provider/serviceprovider-task-countdown/serviceprovider-task-countdown.component';
+import { LocationSetComponent } from './modules/services/location-set/location-set.component';
 
 
 @NgModule({
@@ -120,6 +121,7 @@ import { ServiceproviderTaskCountdownComponent } from './modules/service-provide
     ServiceproviderDashStatComponent,
     ServiceproviderReportsComponent,
     ServiceproviderTaskCountdownComponent,
+    LocationSetComponent,
 
   ],
   imports: [

@@ -272,6 +272,27 @@ auth.get('/get/sprovider', checkAuth, (req, res, next) => {
 });
 
 
+auth.get('/get/sprovider/:id', checkAuth, (req, res, next) => {
+  console.log(req.userData);
+  ServiceProvider.findOne({ user_id: req.params.id}, function (
+    err,
+    serviceprovider
+  ) {
+    if (err)
+      return handleError((err) => {
+        res.status(500).json({
+          message:
+            "Couldn't recieve service provider Details! Please check your connetion",
+        });
+      });
+    res.status(200).json({
+      message: 'service provider recieved successfully!',
+      serviceprovider: serviceprovider,
+    });
+  });
+});
+
+
 auth.post('/get/sproviders', checkAuth, (req, res, next) => {
   console.log(req.body.category);
   ServiceProvider.find({ isavailable: true, service_category: req.body.category}, function (

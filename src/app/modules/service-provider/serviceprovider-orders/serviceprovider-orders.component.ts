@@ -46,11 +46,13 @@ export class ServiceproviderOrdersComponent implements OnInit {
       service_provider: {
         user_id: 'SP1',
         service_provider_name: 'Ranjan Ramanayaka',
-        email: ''
+        email: '',
+        profile_pic: ''
       }, customer: {
         user_id: 'SP1',
         customer_name: 'Ranjan Ramanayaka',
-        email: ''
+        email: '',
+        profile_pic: ''
       }
     },
     {
@@ -73,11 +75,13 @@ export class ServiceproviderOrdersComponent implements OnInit {
       service_provider: {
         user_id: 'SP1',
         service_provider_name: 'Ranjan Ramanayaka',
-        email: ''
+        email: '',
+        profile_pic: ''
       }, customer: {
         user_id: 'SP1',
         customer_name: 'Ranjan Ramanayaka',
-        email: ''
+        email: '',
+        profile_pic: ''
       }
     },
     {
@@ -100,11 +104,13 @@ export class ServiceproviderOrdersComponent implements OnInit {
       service_provider: {
         user_id: 'SP1',
         service_provider_name: 'Ranjan Ramanayaka',
-        email: ''
+        email: '',
+        profile_pic: ''
       }, customer: {
         user_id: 'SP1',
         customer_name: 'Ranjan Ramanayaka',
-        email: ''
+        email: '',
+        profile_pic: ''
       }
     }
   ];
